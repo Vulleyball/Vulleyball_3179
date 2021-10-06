@@ -1,0 +1,109 @@
+/* #choropleth_map {
+	top:100px;
+	bottom: 100px; 
+	left: 100px;
+	right: 100px;
+	height: 1000px;
+	width: 800px;
+}
+
+#line_chart {
+	top:100px;
+	bottom: 100px; 
+	left: 100px;
+	right: 100px;
+	height: 1000px;
+	width: 800px;
+}
+
+#choropleth_map2 {
+	top:100px;
+	bottom: 100px; 
+	left: 100px;
+	right: 100px;
+	height: 1000px;
+	width: 800px;
+} */
+
+#chart1 {
+	width: 1220px;
+}
+
+.page {
+    width: 1500px;
+	height: auto;
+    background-color: white;
+    margin: auto;
+    padding: 50px;
+    padding-top: 35px;
+}
+
+.detail-box a {
+	display: inline-block;
+	padding: 10px 35px;
+	background-color: #f7444e;
+	color: #ffffff;
+	border-radius: 5px;
+	-webkit-transition: all 0.3s;
+	transition: all 0.3s;
+	border: none;
+	text-transform: uppercase;
+  }
+
+.detail-box a:hover {
+	-webkit-transform: translateY(-5px);
+			transform: translateY(-5px);
+	-webkit-box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.15);
+			box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.15);
+  }
+
+
+.detail-box {
+	line-height: 2em;
+}
+.adjust_line_height {
+	line-height: 2.5em;
+}
+.heading_container p {
+  margin-top: 10px;
+  margin-bottom: 0;
+
+}
+.heading_container h2 {
+	position: relative;
+	font-weight: bold;
+	margin-bottom: 0;
+	text-transform: uppercase;
+	padding-bottom: 5px;
+  }
+  .heading_container h2::before {
+	content: "";
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	width: 50px;
+	height: 3px;
+	background: #f7444e;
+	border-radius: 1px;
+	padding-bottom: 5px;
+  }
+
+#hiv{
+	width: 50px;
+	height: 50px;
+}
+
+#hiv2{
+	width: 50px;
+	height: 50px;
+}
+
+#hiv3{
+	width: 50px;
+	height: 50px;
+}
+
+#hiv4{
+	width: 50px;
+	height: 50px;
+}
