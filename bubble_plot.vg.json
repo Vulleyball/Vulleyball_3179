@@ -1,0 +1,167 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 800,
+  "height": 600,
+  "title": "COVID-19 Cases per Country (13 Oct 2020)",
+  "data": {
+    "url": "https://raw.githubusercontent.com/Vulleyball/assignment_test/main/new_data.csv"
+  },
+  "params": [
+    {
+      "name": "GDP_Above",
+      "value": 0,
+      "bind": {
+        "input": "range",
+        "min": 0,
+        "max": 50000,
+        "step": 200,
+        "name": "Minimum GDP: "
+      }
+    },
+    {
+      "name": "Continent_selection",
+      "bind": {
+        "input": "select",
+        "options": [
+          null,
+          "North America",
+          "South America",
+          "Europe",
+          "Africa",
+          "Asia",
+          "Oceania"
+        ],
+        "labels": [
+          "Show All",
+          "North America",
+          "South America",
+          "Europe",
+          "Africa",
+          "Asia",
+          "Oceania"
+        ],
+        "name": "Continent Selection: "
+      }
+    }
+  ],
+  "transform": [
+    {"filter": "datum.Year == 2010"},
+    {"filter": "datum.GDP > 200"},
+    {"filter": "datum['Life expectancy'] > 40"},
+    {"filter": "datum.GDP > GDP_Above"},
+    {
+      "filter": "Continent_selection == null || datum.Continent == Continent_selection"
+    },
+    {
+      "calculate": "datum['Measles ']/datum.Population * 10000",
+      "as": "Measles"
+    }
+  ],
+  "encoding": {
+    "x": {
+      "field": "Life expectancy",
+      "type": "quantitative",
+      "title": "LE",
+      "axis": {"tickCount": 5},
+      "scale": {"type": "log", "domain": [45, 100]}
+    },
+    "y": {
+      "field": "GDP",
+      "type": "quantitative",
+      "axis": {"tickCount": 6},
+      "scale": {"type": "log", "domain": [100, 100000]}
+    }
+  },
+  "layer": [
+    {
+      "selection": {
+        "continent_highlight": {
+          "type": "multi",
+          "fields": ["Continent"],
+          "bind": "legend"
+        }
+      },
+      "mark": "circle",
+      "encoding": {
+        "size": {
+          "field": "Population",
+          "type": "quantitative",
+          "scale": {
+            "type": "threshold",
+            "domain": [1000000, 10000000, 50000000, 100000000, 500000000],
+            "range": [10, 50, 150, 200, 300, 400]
+          },
+          "legend": {"format": ".1s"}
+        },
+        "color": {
+          "field": "Continent",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "North America",
+              "South America",
+              "Europe",
+              "Africa",
+              "Asia",
+              "Oceania"
+            ],
+            "range": [
+              "#e41a1c",
+              "#984ea3",
+              "#ff7f00",
+              "#a6cee3",
+              "#377eb8",
+              "#a65628"
+            ]
+          }
+        },
+        "opacity": {
+          "condition": {"selection": "continent_highlight", "value": 0.6},
+          "value": 0.2
+        },
+        "tooltip": [
+          {"field": "Country", "type": "nominal"},
+          {"field": "GDP", "type": "quantitative", "format": ","},
+          {"field": "Year", "type": "ordinal", "format": ","},
+          {
+            "field": "Measles",
+            "type": "quantitative",
+            "format": ".2f"
+          }
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "align": "right",
+        "baseline": "middle",
+        "dx": -12,
+        "fontSize": 11.5,
+        "fontStyle": "italic"
+      },
+      "encoding": {
+        "text": {"field": "Country", "type": "nominal"},
+        "color": {"value": "black"},
+        "opacity": {
+        "condition": {
+          "test": "datum['Country'] == 'China' || datum['Country'] == 'Singapore' || datum['Country'] == 'Australia' || datum['Country'] == 'New Zealand' || datum['Country'] == 'Italy' || datum['Country'] == 'Yemen' ||  datum['Country'] == 'United States'",
+          "value": 1
+        },
+        "value": 0
+      },
+        "tooltip": [
+          {"field": "Country", "type": "nominal"},
+          {"field": "GDP", "type": "quantitative", "format": ","},
+          {"field": "Life expectancy", "type": "quantitative", "format": ","},
+          {"field": "Population", "type": "quantitative", "format": ","},
+          {
+            "field": "Measles",
+            "type": "quantitative",
+            "format": ".2f"
+          }
+        ]
+      }
+    }
+  ]
+}
