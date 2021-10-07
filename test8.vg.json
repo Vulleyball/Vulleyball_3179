@@ -1,15 +1,14 @@
 {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
     "data": {
-        "url": "https://raw.githubusercontent.com/Vulleyball/assignment_test/main/cancer_new2.csv"
+        "url": "https://raw.githubusercontent.com/Vulleyball/Vulleyball_3179/main/cancer_new2.csv"
     },
     "vconcat": [{
-            
             "width": 600,
-            "height": 400,
+            "height": 250,
             "title": "Breast cancer deaths over the years",
             "projection": {
-                "type": "equalEarth"
+                "type": "equirectangular"
             },
             "layer": [{
                     "data": {
@@ -46,12 +45,11 @@
                             "type": "quantitative",
                             "scale": {
                                 "type": "threshold",
-                                "domain": [50, 100, 500, 1000],
+                                "domain": [500, 1000, 2000, 5000],
                                 "range": ["#fdbe85", "#fd8d3c", "#e6550d", "#bd0026", "#7f0000"]
                             }
                         },
-                        "tooltip": [
-                            {
+                        "tooltip": [{
                                 "field": "Breast",
                                 "type": "quantitative"
                             },
@@ -102,52 +100,132 @@
                 }
             ]
         },
-        {"hconcat":[{
-            "width": 250,
-            "height": 150,
-            "mark": "line",
-            "title": {"text": "Use this line chart to filter"},
-            "params": [{
-                "name": "time_brush",
-                "select": {
-                    "type": "interval",
-                    "encodings": ["x"]
-                }
-            }],
-            "encoding": {
-                "x": {
-                    "field": "Year",
-                    "timeUnit": "year",
-                    "axis": {
-                        "title": "",
-                        "format": "%Y"
+        {
+            "hconcat": [{
+                    "width": 250,
+                    "height": 150,
+                    "mark": "line",
+                    "title": {
+                        "text": "Use this line chart to filter"
+                    },
+                    "params": [{
+                        "name": "time_brush",
+                        "select": {
+                            "type": "interval",
+                            "encodings": ["x"]
+
+                        }
+                    }],
+                    "transform": [{
+                        "calculate": "datum.Cancer/datum.Population",
+                        "as": "mean_cancer"
+                    }],
+                    "encoding": {
+                        "x": {
+                            "field": "Year",
+                            "timeUnit": "year",
+                            "axis": {
+                                "title": "",
+                                "format": "%Y"
+                            }
+                        },
+                        "y": {
+                            "field": "Cancer",
+                            "aggregate": "mean",
+                            "axis": {
+                                "tickCount": 3
+                            },
+                            "title": null,
+                            "scale": {
+                                "type": "symlog"
+                            }
+                        },
+                        "color": {
+                            "field": "Continent",
+                            "type": "nominal",
+                            "title": null,
+                            "scale": {
+                                "domain": [
+                                    "Africa",
+                                    "Asia",
+                                    "Europe",
+                                    "North America",
+                                    "Oceania",
+                                    "South America"
+                                ],
+                                "range": [
+                                    "#6a3d9a",
+                                    "#127273",
+                                    "#1f77b4",
+                                    "#bf130d",
+                                    "#c49c94",
+                                    "#fca636"
+                                ]
+                            }
+                        }
+
                     }
                 },
-                "y": {
-                    "aggregate": "count",
-                    "axis": {
-                        "tickCount": 3,
-                        "grid": false
-                    },
-                    "title": "Count"
+                {
+                    "width": 250,
+                    "height": 150,
+                    "mark": "bar",
+                    "transform": [{
+                        "filter": {
+                            "param": "time_brush"
+                        }
+                    }],
+                    "encoding": {
+                        "y": {
+                            "type": "nominal",
+                            "field": "Continent",
+                            "title": null
+                        },
+                        "x": {
+                            "field": "Lung",
+                            "type": "quantitative",
+                            "aggregate": "sum"
+                        },
+                        "color": {
+                            "field": "Continent",
+                            "type": "nominal",
+                            "title": null,
+                            "scale": {
+                                "domain": [
+                                    "Africa",
+                                    "Asia",
+                                    "Europe",
+                                    "North America",
+                                    "Oceania",
+                                    "South America"
+                                ],
+                                "range": [
+                                    "#6a3d9a",
+                                    "#127273",
+                                    "#1f77b4",
+                                    "#bf130d",
+                                    "#c49c94",
+                                    "#fca636"
+                                ]
+                            }
+                        }
+                    }
                 }
-            }
-        },
-        {
-        "width": 250,
-        "height": 150,
-        "mark": "bar",
-        "transform": [{"filter":{"param": "time_brush"}}],
-        "encoding": {
-          "y": {"type": "nominal", "field": "Continent", "title": null},
-          "x": {"field": "Lung", "type": "quantitative","aggregate": "sum"}}}
-    ]}],
+            ]
+        }
+    ],
     "config": {
         "title": {
             "font": "sans-serif",
             "fontSize": 14
         },
-        "legend": {"orient": "top", 
-            "layout": {"top":{"anchor": "middle"}}}
+        "legend": {
+            "orient": "top",
+            "layout": {
+                "top": {
+                    "anchor": "middle"
+                }
+            }
+        }
     }
 }
