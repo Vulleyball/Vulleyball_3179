@@ -1,7 +1,7 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": {
-    "text": "BMI index",
+    "text": "Body mass index in 2015",
     "fontSize": 20,
     "font": "Roboto"},
   "width": 500,
@@ -33,21 +33,19 @@
           "lookup": "properties.name_long",
           "from": {
               "data": {
-                  "url": "https://raw.githubusercontent.com/Vulleyball/data_1/main/data.csv"
+                  "url": "https://raw.githubusercontent.com/Vulleyball/Vulleyball_3179/main/cancer_new2.csv"
               },
               "key": "Country",
-              "fields": ["BMI ", "Year", "Country"]
-
+              "fields": ["BMI", "Year", "Country"]
 
           }
 
       },
-
       {
-          "filter": "datum['BMI '] > 0"
+          "filter": "datum['BMI'] > 0"
       },
       {
-          "calculate": "datum['BMI '] +0.05",
+          "calculate": "datum['BMI'] +0.05",
           "as": "Life_expectancy"
       }
 
@@ -61,11 +59,11 @@
   },
   "encoding": {
       "color": {
-          "field": "BMI ",
+          "field": "BMI",
           "type": "quantitative",
           "scale": {
               "type": "threshold",
-              "domain": [5,15,25,35,45]
+              "domain": [21,23,25,27,29]
           }
       },
       "tooltip": [{
@@ -75,7 +73,7 @@
           },
           {
               "title": "BMI index",
-              "field": "BMI ",
+              "field": "BMI",
               "type": "quantitative"
           }
       ]
